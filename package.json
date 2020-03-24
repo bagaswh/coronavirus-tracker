@@ -1,0 +1,34 @@
+{
+  "name": "coronavirus-tracker",
+  "version": "1.0.4",
+  "description": "Track new Covid-19 cases and deaths on your desktop",
+  "main": "src/index.js",
+  "repository": "https://github.com/bagaswh/coronavirus-tracker",
+  "bin": {
+    "coronavirus-tracker": "src/index.js"
+  },
+  "keywords": [
+    "monitoring",
+    "covid19"
+  ],
+  "dependencies": {
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.19",
+    "cheerio": "^1.0.0-rc.3",
+    "commander": "^5.0.0",
+    "debug": "^4.1.1",
+    "delay": "^4.3.0",
+    "lodash": "^4.17.15",
+    "lowdb": "^1.0.0",
+    "moment": "^2.24.0",
+    "node-fetch": "^2.6.0",
+    "node-notifier": "^6.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bagas Wahyu Hidayah",
+  "license": "ISC"
+}
