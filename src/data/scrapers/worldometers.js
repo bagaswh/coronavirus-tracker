@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const debug = require('debug')('app:scraper-worldometers');
+// const debug = require('debug')('app:scraper-worldometers');
 
 const { getResource, extractText, writeFile } = require('../../util');
 
@@ -52,15 +52,15 @@ function parse($, data) {
   return data;
 }
 
-async function scrape(data) {
+async function scrape(data, ctx) {
   const url = 'https://www.worldometers.info/coronavirus/';
-  debug('Fetching resources');
-  const resource = await getResource(url, debug);
+  ctx.log('Fetching resources');
+  const resource = await getResource(url, ctx.log);
 
   // debug('Writing cache');
   // writeFile(resource, '.cache/res_worldometers.html');
 
-  debug('Parsing');
+  ctx.log('Parsing');
   const $ = cheerio.load(resource);
   return parse($, data);
 }

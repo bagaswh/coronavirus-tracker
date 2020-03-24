@@ -2,10 +2,10 @@
   "name": "coronavirus-tracker",
   "version": "1.0.4",
   "description": "Track new Covid-19 cases and deaths on your desktop",
-  "main": "src/index.js",
+  "main": "bin/index.js",
   "repository": "https://github.com/bagaswh/coronavirus-tracker",
   "bin": {
-    "coronavirus-tracker": "src/index.js"
+    "coronavirus-tracker": "bin/index.js"
   },
   "keywords": [
     "monitoring",
@@ -26,7 +26,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Bagas Wahyu Hidayah",

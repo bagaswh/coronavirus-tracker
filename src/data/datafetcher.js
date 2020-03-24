@@ -26,9 +26,9 @@ const schema = {
   }
 };
 
-async function fetchData() {
+async function fetchData(ctx) {
   const data = _.cloneDeep(schema);
-  return await scrapers.worldometers(data);
+  return await scrapers.worldometers(data, ctx);
 }
 
 module.exports = { fetchData };
