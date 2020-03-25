@@ -9,7 +9,7 @@ async function writeFile(data, name) {
 }
 
 async function getResource(url, debug) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async resolve => {
     let fails = true;
 
     let res;
@@ -32,7 +32,7 @@ function extractText(el, fn) {
   let output = el
     .text()
     .trim()
-    .replace(/\,/g, '');
+    .replace(/,/g, '');
   if (typeof fn == 'function') {
     return fn(output);
   }
