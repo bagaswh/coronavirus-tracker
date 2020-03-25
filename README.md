@@ -17,3 +17,10 @@ npm install -g coronavirus-tracker
   Options:
     -i, --interval          Data fetching interval
 ```
+
+Press Enter if you want to fetch data immediately without waiting for interval. 
+Next interval will be reset.
+
+
+## Data source
+- Worldometers
