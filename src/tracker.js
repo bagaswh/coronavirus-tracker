@@ -31,7 +31,7 @@ function notify(title, message) {
 function compareData(prev, now) {
   if (_.isEmpty(prev)) {
     notify(`Current coronavirus cases`, `${now.mainCases} cases with ${now.deaths} deaths`);
-    return false;
+    return true;
   }
 
   let message = '';
