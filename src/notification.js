@@ -78,8 +78,8 @@ function notificationWrapper(prev, now) {
     mainCasesDiff,
     deathsDiff,
     now.recovered,
-    now.mainCases,
     now.currentlyInfected,
+    now.mainCases,
     now.deaths,
     prev.timestamp,
     now.timestamp
