@@ -31,7 +31,7 @@ function notify(title, message) {
 function compareData(prev, now) {
   if (_.isEmpty(prev)) {
     notify(`Current coronavirus cases`, `${now.mainCases} cases with ${now.deaths} deaths`);
-    return;
+    return false;
   }
 
   let message = '';
@@ -39,7 +39,7 @@ function compareData(prev, now) {
   const mainCasesDiff = now.mainCases - prev.mainCases;
   const deathsDiff = now.deaths - prev.deaths;
   if (!mainCasesDiff && !deathsDiff) {
-    return;
+    return false;
   }
   if (mainCasesDiff) {
     title = 'New coronavirus cases';
@@ -51,6 +51,8 @@ function compareData(prev, now) {
   }
   message += ` since ${moment(prev.timestamp).from(now.timestamp)}`;
   notify(title, message);
+
+  return true;
 }
 
 class Tracker extends EventEmitter {
@@ -83,11 +85,12 @@ class Tracker extends EventEmitter {
 
     this.log('Fetching previous data from database');
     const lastData = db.getLast('cases');
-    compareData(lastData, data);
-
-    this.log('Push new data into database');
-    db.add('cases', data);
-    this.log('Everything done');
+    const isDataChanged = compareData(lastData, data);
+    if (isDataChanged) {
+      this.log('Push new data into database');
+      db.add('cases', data);
+      this.log('Everything done');
+    }
 
     this._interval = this._startFetchingLoop();
   }
