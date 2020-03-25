@@ -7,6 +7,9 @@
   "bin": {
     "coronavirus-tracker": "bin/index.js"
   },
+  "engines": {
+    "node": ">=11"
+  },
   "keywords": [
     "monitoring",
     "covid19"
