@@ -22,6 +22,8 @@ function parse($, data) {
 
   data.currentlyInfectedMildCondition = extractText(mildCondition, Number);
   data.currentlyInfectedSeriousCondition = extractText(seriousCondition, Number);
+  data.currentlyInfected =
+    data.currentlyInfectedMildCondition + data.currentlyInfectedSeriousCondition;
 
   const tableRows = $('#main_table_countries_today tbody:nth-child(2) tr');
   tableRows.each((index, el) => {

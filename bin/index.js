@@ -3,7 +3,7 @@
 const { program } = require('commander');
 program
   .option('-d, --disable-terminal', 'Disable terminal', false)
-  .option('-i, --interval <interval>', 'Fetch interval (ms)', 15 * 1000)
+  .option('-i, --interval <interval>', 'Fetch interval (s)', 10 * 60)
   .option('-c, --clear', 'Clear data before starting', false);
 program.parse(process.argv);
 

@@ -24,6 +24,7 @@ function makeNotification(
   deathsDiff,
 
   recovered,
+  activeCases,
   mainCases,
   deaths,
 
@@ -35,8 +36,8 @@ function makeNotification(
   const message = [];
 
   if (recoveredDiff > 0) {
-    nouns.push('cases recovered');
-    message.push(`${recoveredDiff} new cases recovered`);
+    nouns.push('recovered cases');
+    message.push(`${recoveredDiff} new recovered`);
   }
   if (mainCasesDiff > 0) {
     nouns.push('cases');
@@ -52,7 +53,7 @@ function makeNotification(
       commafy(message) +
       ` since ${moment(prevTimestamp).from(
         nowTimestamp
-      )} (total ${recovered} recovered cases, ${mainCases} active cases, and ${deaths} deaths)`
+      )} (total ${mainCases} cases with ${recovered} recovered, ${activeCases} active cases, and ${deaths} deaths)`
   };
 }
 
@@ -60,7 +61,7 @@ function notificationWrapper(prev, now) {
   if (_.isEmpty(prev) && !_.isEmpty(now)) {
     notify(
       `Current coronavirus cases`,
-      `${now.mainCases} cases with ${now.recovered} recovered and ${now.deaths} deaths`
+      `Total ${now.mainCases} cases with ${now.currentlyInfected} active cases, ${now.recovered} recovered, and ${now.deaths} deaths`
     );
     return;
   }
@@ -78,6 +79,7 @@ function notificationWrapper(prev, now) {
     deathsDiff,
     now.recovered,
     now.mainCases,
+    now.currentlyInfected,
     now.deaths,
     prev.timestamp,
     now.timestamp

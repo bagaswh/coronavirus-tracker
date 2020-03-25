@@ -15,7 +15,7 @@ npm install -g coronavirus-tracker
   coronavirus-tracker [options]
 
   Options:
-    -i, --interval          Data fetching interval (in ms)
+    -i, --interval          Data fetching interval (in s)
     -c, --clear             Clear local database before starting
 ```
 

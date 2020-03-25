@@ -2,6 +2,8 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const delay = require('delay');
 const numeral = require('numeral');
+const moment = require('moment');
+const momentDurationFormatSetup = require('moment-duration-format');
 
 async function writeFile(data, name) {
   const file = fs.createWriteStream(name);
@@ -67,4 +69,21 @@ function commafy(arr) {
     .join(', ');
 }
 
-module.exports = { writeFile, getResource, extractText, commafy, numeralify };
+momentDurationFormatSetup(moment);
+
+function getDuration(seconds) {
+  return moment.duration(seconds, 'seconds').format(function() {
+    const s = this.duration.asSeconds();
+    if (s >= 3600) {
+      return 'h [hours]';
+    } else if (s >= 60) {
+      return 'm [minutes]';
+    } else if (s >= 1) {
+      return 's [seconds]';
+    }
+
+    return '';
+  });
+}
+
+module.exports = { writeFile, getResource, extractText, commafy, numeralify, getDuration };

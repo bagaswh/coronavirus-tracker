@@ -5,8 +5,9 @@ const { program } = require('commander');
 const debug = require('debug')('app');
 
 const { notificationWrapper } = require('./notification');
-const db = require('../src/data/database');
-const { fetchData } = require('../src/data/datafetcher');
+const db = require('./data/database');
+const { fetchData } = require('./data/datafetcher');
+const { getDuration } = require('./util');
 
 function compareData(prev, now) {
   if (_.isEmpty(prev) && !_.isEmpty(now)) {
@@ -37,6 +38,7 @@ class Tracker extends EventEmitter {
     }
 
     this.fetch();
+    this.log(`Fetching data with ${getDuration(program.interval)} interval`);
     this._interval = this._startFetchingLoop();
   }
 
@@ -67,7 +69,7 @@ class Tracker extends EventEmitter {
   }
 
   _startFetchingLoop() {
-    return setInterval(this.fetch.bind(this), program.interval);
+    return setInterval(this.fetch.bind(this), program.interval * 1000);
   }
 }
 
