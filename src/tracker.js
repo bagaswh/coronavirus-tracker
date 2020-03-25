@@ -64,6 +64,10 @@ class Tracker extends EventEmitter {
   }
 
   init() {
+    if (program.clear) {
+      db.clear();
+    }
+
     this.fetch();
     this._interval = this._startFetchingLoop();
   }
@@ -74,10 +78,6 @@ class Tracker extends EventEmitter {
 
   async fetch() {
     clearInterval(this._interval);
-
-    if (program.clear) {
-      db.clear();
-    }
 
     this.log('Fetching data');
     const data = await fetchData(this);
