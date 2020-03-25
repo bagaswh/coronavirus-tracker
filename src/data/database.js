@@ -4,16 +4,19 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const Memory = require('lowdb/adapters/Memory');
 
-if (!fs.existsSync('data')) {
-  fs.mkdirSync('data');
-}
+const root = path.resolve(__dirname, '../../');
 
-const dataPath = path.join('data', 'data.json');
+const dataPath = path.join(root, 'data');
 if (!fs.existsSync(dataPath)) {
-  fs.createWriteStream(dataPath);
+  fs.mkdirSync(dataPath);
 }
 
-const adapter = process.env.NODE_ENV == 'test' ? new Memory() : new FileSync(dataPath);
+const dataJsonPath = path.join(dataPath, 'data.json');
+if (!fs.existsSync(dataJsonPath)) {
+  fs.createWriteStream(dataJsonPath);
+}
+
+const adapter = process.env.NODE_ENV == 'test' ? new Memory() : new FileSync(dataJsonPath);
 const db = low(adapter);
 db.defaults({ cases: [] }).write();
 

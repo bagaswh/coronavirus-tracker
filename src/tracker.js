@@ -38,7 +38,7 @@ function compareData(prev, now) {
   let title = '';
   const mainCasesDiff = now.mainCases - prev.mainCases;
   const deathsDiff = now.deaths - prev.deaths;
-  if ((!mainCasesDiff, !deathsDiff)) {
+  if (!mainCasesDiff && !deathsDiff) {
     return;
   }
   if (mainCasesDiff) {
