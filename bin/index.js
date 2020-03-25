@@ -1,11 +1,21 @@
 #!/usr/bin/env node
 
-const { Worker } = require('worker_threads');
+const { program } = require('commander');
+program
+  .option('-d, --disable-terminal', 'Disable terminal', false)
+  .option('-i, --interval <interval>', 'Fetch interval (ms)', 15 * 1000)
+  .option('-c, --clear', 'Clear data before starting', false);
+program.parse(process.argv);
+
+process.on('unhandledRejection', err => {
+  throw err;
+});
+
 const Tracker = require('../src/tracker');
 const Terminal = require('../src/view/terminal');
 
-const terminal = new Terminal();
 const tracker = new Tracker();
+const terminal = new Terminal();
 
 terminal.on('requestfetch', () => {
   tracker.fetch();
@@ -13,6 +23,7 @@ terminal.on('requestfetch', () => {
 
 tracker.on('log', msg => {
   terminal.log(msg);
+  terminal.clearScreen();
 });
 
 tracker.init();

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const delay = require('delay');
+const numeral = require('numeral');
 
 async function writeFile(data, name) {
   const file = fs.createWriteStream(name);
@@ -38,4 +39,32 @@ function extractText(el, fn) {
   return output;
 }
 
-module.exports = { writeFile, getResource, extractText };
+function numeralify(text) {
+  const regex = /\d+/g;
+  let match;
+  let lastIndex = regex.lastIndex;
+  while ((match = regex.exec(text)) != null) {
+    text =
+      text.slice(0, lastIndex) +
+      text.slice(lastIndex).replace(/\d+/, numeral(match[0]).format('0,0'));
+    lastIndex = regex.lastIndex;
+  }
+  return text;
+}
+
+function commafy(arr) {
+  if (arr.length == 1) {
+    return arr[0];
+  }
+
+  if (arr.length == 2) {
+    return arr[0] + ' and ' + arr[1];
+  }
+
+  return arr
+    .slice(0, -1)
+    .concat('and ' + arr[arr.length - 1])
+    .join(', ');
+}
+
+module.exports = { writeFile, getResource, extractText, commafy, numeralify };

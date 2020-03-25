@@ -16,7 +16,7 @@ class Terminal extends EventEmitter {
   }
 
   init() {
-    this._screen.key(['escape', 'q', 'C-c'], (ch, key) => {
+    this._screen.key(['escape', 'q', 'C-c'], () => {
       return process.exit(0);
     });
 
@@ -29,6 +29,11 @@ class Terminal extends EventEmitter {
 
   log(msg) {
     this._log.log(msg);
+  }
+
+  clearScreen() {
+    this._screen.clearRegion();
+    // console.log(this._screen);
   }
 }
 

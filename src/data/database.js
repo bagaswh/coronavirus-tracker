@@ -41,6 +41,6 @@ function getLast(name) {
 }
 
 function clear() {
-  db.set('cases', []);
+  db.set('cases', []).write();
 }
 module.exports = { db, get, clear, add, getLast };
