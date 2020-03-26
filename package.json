@@ -1,6 +1,6 @@
 {
   "name": "coronavirus-tracker",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Track new Covid-19 cases and deaths on your desktop",
   "main": "bin/index.js",
   "repository": "https://github.com/bagaswh/coronavirus-tracker",
