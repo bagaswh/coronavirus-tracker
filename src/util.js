@@ -3,7 +3,9 @@ const fetch = require('node-fetch');
 const delay = require('delay');
 const numeral = require('numeral');
 const moment = require('moment');
+const soundPlayer = require('play-sound')({});
 const momentDurationFormatSetup = require('moment-duration-format');
+const { customSound: customSoundPaths } = require('commander').program;
 
 async function writeFile(data, name) {
   const file = fs.createWriteStream(name);
@@ -11,6 +13,7 @@ async function writeFile(data, name) {
 }
 
 async function getResource(url, debug) {
+  // eslint-disable-next-line
   return new Promise(async resolve => {
     let fails = true;
 
@@ -86,4 +89,25 @@ function getDuration(seconds) {
   });
 }
 
-module.exports = { writeFile, getResource, extractText, commafy, numeralify, getDuration };
+function formatTime(date) {
+  if (moment(date).isSame(moment(), 'day')) {
+    return moment(date).format('LT');
+  }
+  return moment(date).format('LLL');
+}
+
+function playSound() {
+  const rand = Math.floor(Math.random() * customSoundPaths.length);
+  soundPlayer.play(customSoundPaths[rand]);
+}
+
+module.exports = {
+  writeFile,
+  getResource,
+  extractText,
+  commafy,
+  numeralify,
+  getDuration,
+  formatTime,
+  playSound
+};

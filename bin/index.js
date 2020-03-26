@@ -1,10 +1,28 @@
 #!/usr/bin/env node
-
+const path = require('path');
 const { program } = require('commander');
+const packageJson = require('../package.json');
+
+const root = path.resolve(__dirname, '../');
+
 program
-  .option('-d, --disable-terminal', 'Disable terminal', false)
-  .option('-i, --interval <interval>', 'Fetch interval (s)', 10 * 60)
-  .option('-c, --clear', 'Clear data before starting', false);
+  // .option('-d, --disable-terminal', 'Disable terminal', false)
+  .version(packageJson.version)
+  .option('-i, --interval <interval>', 'Data fetching interval (in seconds)', 10 * 60)
+  .option(
+    '-c, --custom-sound <customSound>',
+    'Use custom sound for notification (leave to use provided sounds, false to use default system notification)',
+    [
+      path.join(root, 'assets', 'Infect.mp3'),
+      path.join(root, 'assets', 'Ring_Around_the_Rosie.mp3')
+    ]
+  )
+  .option(
+    '-d, --data-path <dataPath>',
+    'Path to store JSON data',
+    path.join(root, 'data', 'data.json')
+  )
+  .option('-c, --clear', 'Clear local database before starting', false);
 program.parse(process.argv);
 
 process.on('unhandledRejection', err => {

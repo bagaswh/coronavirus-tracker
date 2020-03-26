@@ -1,19 +1,24 @@
 const path = require('path');
 const notifier = require('node-notifier');
 const _ = require('lodash');
-const { commafy, numeralify } = require('./util');
+const { commafy, numeralify, playSound } = require('./util');
 const moment = require('moment');
+const { customSound } = require('commander').program;
 
 const root = path.resolve(__dirname, '../');
 
 function notify(title, message) {
   message = numeralify(message);
 
+  if (customSound !== false) {
+    playSound();
+  }
+
   notifier.notify({
     title,
     message,
     icon: path.join(root, 'assets', 'Coronavirus.png'),
-    sound: path.join(root, 'assets', 'Infect.mp3'),
+    sound: customSound === false,
     wait: false
   });
 }

@@ -3,11 +3,12 @@ const EventEmitter = require('events');
 const _ = require('lodash');
 const { program } = require('commander');
 const debug = require('debug')('app');
+const moment = require('moment');
 
 const { notificationWrapper } = require('./notification');
-const db = require('./data/database');
 const { fetchData } = require('./data/datafetcher');
-const { getDuration } = require('./util');
+const { getDuration, formatTime } = require('./util');
+const db = require('./data/database');
 
 function compareData(prev, now) {
   if (_.isEmpty(prev) && !_.isEmpty(now)) {
@@ -28,7 +29,7 @@ class Tracker extends EventEmitter {
   constructor(logger) {
     super();
 
-    this._interval = -1;
+    this._timeoutId = -1;
     this._logger = logger || debug;
   }
 
@@ -37,9 +38,10 @@ class Tracker extends EventEmitter {
       db.clear();
     }
 
-    this.fetch();
     this.log(`Fetching data with ${getDuration(program.interval)} interval`);
-    this._interval = this._startFetchingLoop();
+
+    this.fetch();
+    this._timeoutId = this._startFetchingLoop();
   }
 
   log(msg) {
@@ -47,11 +49,11 @@ class Tracker extends EventEmitter {
   }
 
   async fetch() {
-    clearInterval(this._interval);
+    clearTimeout(this._timeoutId);
 
     this.log('Fetching data');
     const data = await fetchData(this);
-    this.log('Done fetching data');
+    this.log(`Done fetching data (last fetched: ${formatTime(moment())})`);
 
     this.log('Fetching previous data from database');
     const lastData = db.getLast('cases');
@@ -65,11 +67,11 @@ class Tracker extends EventEmitter {
       this.log('Everything done');
     }
 
-    this._interval = this._startFetchingLoop();
+    this._timeoutId = this._startFetchingLoop();
   }
 
   _startFetchingLoop() {
-    return setInterval(this.fetch.bind(this), program.interval * 1000);
+    return setTimeout(this.fetch.bind(this), program.interval * 1000);
   }
 }
 
