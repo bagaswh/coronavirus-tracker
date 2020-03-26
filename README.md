@@ -18,7 +18,7 @@ Options:
   -V, --version                     output the version number
   -i, --interval <interval>         data fetching interval (in seconds) (default: 600)
   -u, --use-custom-sound            use custom sound for notification
-  -c, --custom-sound-paths <customSoundPaths>  paths for custom sound
+  -c, --custom-sound-paths <customSoundPaths>  paths for custom sound (defaults to the sounds provided in the assets folder)
 
   -d, --data-path <dataPath>        path to store JSON data (defaults to {root}/data/data.json)
   -c, --clear                       clear local database before starting (default: false)
