@@ -1,16 +1,18 @@
 const path = require('path');
 const notifier = require('node-notifier');
 const _ = require('lodash');
-const { commafy, numeralify, playSound } = require('./util');
+const { commafy, numeralify, playSound, stripNonExistingDirs } = require('./util');
 const moment = require('moment');
-const { customSound } = require('commander').program;
+const { useCustomSound, customSoundPaths } = require('commander').program;
 
 const root = path.resolve(__dirname, '../');
 
-function notify(title, message) {
+async function notify(title, message) {
+  await stripNonExistingDirs(customSoundPaths);
+
   message = numeralify(message);
 
-  if (customSound !== false) {
+  if (useCustomSound && customSoundPaths.length) {
     playSound();
   }
 
@@ -18,7 +20,7 @@ function notify(title, message) {
     title,
     message,
     icon: path.join(root, 'assets', 'Coronavirus.png'),
-    sound: customSound === false,
+    sound: !useCustomSound || !customSoundPaths.length,
     wait: false
   });
 }

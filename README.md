@@ -17,7 +17,8 @@ coronavirus-tracker [options]
 Options:
   -V, --version                     output the version number
   -i, --interval <interval>         data fetching interval (in seconds) (default: 600)
-  -c, --custom-sound <customSound>  use custom sound for notification (leave to use provided sounds, false                                   to use default system notification)
+  -u, --use-custom-sound            use custom sound for notification
+  -c, --custom-sound <customSound>  paths for custom sound
 
   -d, --data-path <dataPath>        path to store JSON data (defaults to {root}/data/data.json)
   -c, --clear                       clear local database before starting (default: false)
@@ -26,6 +27,10 @@ Options:
 
 Press Enter if you want to fetch data immediately without waiting for interval.
 Next interval will be reset.
+
+## Custom notification sound
+To use custom notification sound, it needs a little work. Check this blog post for the steps: [Node.js: Playing Sounds to Provide Notifications
+](https://thisdavej.com/node-js-playing-sounds-to-provide-notifications/).
 
 ## Data source
 

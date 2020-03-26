@@ -1,11 +1,14 @@
 const fs = require('fs');
+const util = require('util');
 const fetch = require('node-fetch');
 const delay = require('delay');
 const numeral = require('numeral');
 const moment = require('moment');
 const soundPlayer = require('play-sound')({});
 const momentDurationFormatSetup = require('moment-duration-format');
-const { customSound: customSoundPaths } = require('commander').program;
+const { customSoundPaths } = require('commander').program;
+
+const stat = util.promisify(fs.stat);
 
 async function writeFile(data, name) {
   const file = fs.createWriteStream(name);
@@ -75,6 +78,8 @@ function commafy(arr) {
 momentDurationFormatSetup(moment);
 
 function getDuration(seconds) {
+  seconds = Number.parseInt(seconds);
+
   return moment.duration(seconds, 'seconds').format(function() {
     const s = this.duration.asSeconds();
     if (s >= 3600) {
@@ -101,6 +106,17 @@ function playSound() {
   soundPlayer.play(customSoundPaths[rand]);
 }
 
+async function stripNonExistingDirs(dirs) {
+  for (let i = 0; i < dirs.length; i++) {
+    try {
+      await stat(dirs[i]);
+    } catch (e) {
+      dirs.splice(i, 1);
+    }
+  }
+  return dirs;
+}
+
 module.exports = {
   writeFile,
   getResource,
@@ -109,5 +125,6 @@ module.exports = {
   numeralify,
   getDuration,
   formatTime,
-  playSound
+  playSound,
+  stripNonExistingDirs
 };

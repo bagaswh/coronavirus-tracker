@@ -1,8 +1,16 @@
+const path = require('path');
 const moment = require('moment');
-const { commafy, numeralify, formatTime, playSound } = require('../src/util');
+const { commafy, numeralify, formatTime, stripNonExistingDirs } = require('../src/util');
 
-it('should play sound', () => {
-  playSound();
+it('should strip non-existing directories', async () => {
+  const root = path.resolve(__dirname, '../');
+  const existingDirs = [
+    path.join(root, 'assets', 'Infect.mp3'),
+    path.join(root, 'assets', 'Ring_Around_the_Rosie.mp3'),
+    path.join(root, 'assets', 'Bullocks.mp3')
+  ];
+  await stripNonExistingDirs(existingDirs);
+  expect(existingDirs.length).toBe(2);
 });
 
 it('should join list by comma and putting "and" in the end', () => {

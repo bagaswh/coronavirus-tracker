@@ -9,13 +9,15 @@ program
   // .option('-d, --disable-terminal', 'Disable terminal', false)
   .version(packageJson.version)
   .option('-i, --interval <interval>', 'Data fetching interval (in seconds)', 10 * 60)
+  .option('-u, --use-custom-sound', 'Use custom sound for notification')
   .option(
-    '-c, --custom-sound <customSound>',
-    'Use custom sound for notification (leave to use provided sounds, false to use default system notification)',
-    [
-      path.join(root, 'assets', 'Infect.mp3'),
-      path.join(root, 'assets', 'Ring_Around_the_Rosie.mp3')
-    ]
+    '-c, --custom-sound-paths <customSoundPaths>',
+    'Use custom sound for notification',
+    `
+    ${path.join(root, 'assets', 'Infect.mp3')},
+    ${path.join(root, 'assets', 'Ring_Around_the_Rosie.mp3')},
+    ${path.join(root, 'assets', 'Cough.ogg')}
+  `
   )
   .option(
     '-d, --data-path <dataPath>',
@@ -24,6 +26,8 @@ program
   )
   .option('-c, --clear', 'Clear local database before starting', false);
 program.parse(process.argv);
+
+program.customSoundPaths = program.customSoundPaths.split(',').map(soundPath => soundPath.trim());
 
 process.on('unhandledRejection', err => {
   throw err;
