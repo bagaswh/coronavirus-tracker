@@ -5,6 +5,7 @@ const packageJson = require('../package.json');
 
 const root = path.resolve(__dirname, '../');
 
+// ---- program options setup
 program
   .version(packageJson.version)
   .option(
@@ -28,16 +29,26 @@ program
     'Path to store JSON data',
     path.join(root, 'data', 'data.json')
   )
-  .option('-c, --clear', 'Clear local database before starting', false);
+  .option('-c, --clear', 'Clear local database before starting');
 program.parse(process.argv);
 
-// program.watchCountries = program.watchCountries.split(',').map(country => country.trim());
 program.customSoundPaths = program.customSoundPaths.split(',').map(soundPath => soundPath.trim());
 
+// ---- socket setup
+const socket = require('../src/socket');
+socket.start();
+
+// ---- global error handling
 process.on('unhandledRejection', err => {
   throw err;
 });
 
+process.on('uncaughtException', err => {
+  console.error(err);
+  process.exit();
+});
+
+// ----- app setup
 const Tracker = require('../src/tracker');
 const Terminal = require('../src/view/terminal');
 

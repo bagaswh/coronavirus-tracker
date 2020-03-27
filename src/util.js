@@ -61,6 +61,10 @@ function numeralify(text) {
 }
 
 function commafy(arr) {
+  if (!arr.length) {
+    return '';
+  }
+
   if (arr.length == 1) {
     return arr[0];
   }

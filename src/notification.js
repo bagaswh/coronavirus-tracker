@@ -78,7 +78,7 @@ function notificationWrapper(countriesName, prev, now) {
   const recoveredDiff = now.recovered - prev.recovered;
   const mainCasesDiff = now.mainCases - prev.mainCases;
   const deathsDiff = now.deaths - prev.deaths;
-  if (!recoveredDiff && !mainCasesDiff && !deathsDiff) {
+  if (recoveredDiff <= 0 && mainCasesDiff <= 0 && deathsDiff <= 0) {
     return;
   }
 
