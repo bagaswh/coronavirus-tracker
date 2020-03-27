@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "repository": "https://github.com/bagaswh/coronavirus-tracker",
   "bin": {
-    "coronavirus-tracker": "cross-env NODE_ENV=\"production\" bin/index.js"
+    "coronavirus-tracker": "bin/index.js"
   },
   "engines": {
     "node": ">=11"
