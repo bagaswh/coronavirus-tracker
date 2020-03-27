@@ -9,6 +9,7 @@ const { notificationWrapper } = require('./notification');
 const { fetchData } = require('./data/datafetcher');
 const { getDuration, formatTime } = require('./util');
 const db = require('./data/database');
+// const { watchCountries } = require('commander').program;
 
 function compareData(prev, now) {
   if (_.isEmpty(prev) && !_.isEmpty(now)) {
@@ -58,7 +59,9 @@ class Tracker extends EventEmitter {
     this.log('Fetching previous data from database');
     const lastData = db.getLast('cases');
 
-    notificationWrapper(lastData, data);
+    // const countriesName = getCountriesName(watchCountries);
+
+    notificationWrapper(null, lastData, data);
 
     const isDataChanged = compareData(lastData, data);
     if (isDataChanged) {

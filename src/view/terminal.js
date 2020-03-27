@@ -33,7 +33,6 @@ class Terminal extends EventEmitter {
 
   clearScreen() {
     this._screen.clearRegion();
-    // console.log(this._screen);
   }
 }
 

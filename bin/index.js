@@ -6,8 +6,12 @@ const packageJson = require('../package.json');
 const root = path.resolve(__dirname, '../');
 
 program
-  // .option('-d, --disable-terminal', 'Disable terminal', false)
   .version(packageJson.version)
+  .option(
+    '-w, --watch-countries <countries>',
+    'Watch countries (use country ISO code or its name in English, eg: "IDN, England, Italy")',
+    10 * 60
+  )
   .option('-i, --interval <interval>', 'Data fetching interval (in seconds)', 10 * 60)
   .option('-u, --use-custom-sound', 'Use custom sound for notification')
   .option(
@@ -27,6 +31,7 @@ program
   .option('-c, --clear', 'Clear local database before starting', false);
 program.parse(process.argv);
 
+// program.watchCountries = program.watchCountries.split(',').map(country => country.trim());
 program.customSoundPaths = program.customSoundPaths.split(',').map(soundPath => soundPath.trim());
 
 process.on('unhandledRejection', err => {

@@ -1,9 +1,11 @@
 const path = require('path');
 const notifier = require('node-notifier');
 const _ = require('lodash');
-const { commafy, numeralify, playSound, stripNonExistingDirs } = require('./util');
 const moment = require('moment');
+const open = require('open');
 const { useCustomSound, customSoundPaths } = require('commander').program;
+
+const { commafy, numeralify, playSound, stripNonExistingDirs } = require('./util');
 
 const root = path.resolve(__dirname, '../');
 
@@ -16,13 +18,18 @@ async function notify(title, message) {
     playSound();
   }
 
-  notifier.notify({
-    title,
-    message,
-    icon: path.join(root, 'assets', 'Coronavirus.png'),
-    sound: !useCustomSound || !customSoundPaths.length,
-    wait: false
-  });
+  notifier.notify(
+    {
+      title,
+      message,
+      icon: path.join(root, 'assets', 'Coronavirus.png'),
+      sound: !useCustomSound || !customSoundPaths.length,
+      wait: true
+    },
+    () => {
+      open('https://www.worldometers.info/coronavirus/');
+    }
+  );
 }
 
 function makeNotification(
@@ -64,7 +71,7 @@ function makeNotification(
   };
 }
 
-function notificationWrapper(prev, now) {
+function notificationWrapper(countriesName, prev, now) {
   if (_.isEmpty(prev) && !_.isEmpty(now)) {
     notify(
       `Current coronavirus cases`,
