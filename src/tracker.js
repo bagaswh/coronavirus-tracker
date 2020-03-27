@@ -52,7 +52,6 @@ class Tracker extends EventEmitter {
   async fetch() {
     clearTimeout(this._timeoutId);
 
-    this.log('Fetching data');
     const data = await fetchData(this);
     this.log(`Done fetching data (last fetched: ${formatTime(moment())})`);
 

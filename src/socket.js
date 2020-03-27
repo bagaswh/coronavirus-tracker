@@ -1,8 +1,9 @@
+const config = require('config');
 const osName = require('os-name');
 const { interval, useCustomSound, clear } = require('commander').program;
 
 function start() {
-  const socket = require('socket.io-client')('http://coronavirus-tracker-analytics.herokuapp.com', {
+  const socket = require('socket.io-client')(config.get('statsUrl'), {
     path: '/app',
     transports: ['websocket'],
     transportOptions: {

@@ -23,6 +23,7 @@ async function getResource(url, debug) {
     let res;
     while (fails) {
       try {
+        debug(`Fetching resource from ${url}`);
         res = await fetch(url);
         fails = false;
       } catch (e) {

@@ -55,7 +55,6 @@ function parse($, data) {
 
 async function scrape(data, ctx) {
   const url = 'https://www.worldometers.info/coronavirus/';
-  ctx.log('Fetching resources');
   const resource = await getResource(url, ctx.log.bind(ctx));
 
   ctx.log('Parsing');

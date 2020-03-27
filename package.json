@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "repository": "https://github.com/bagaswh/coronavirus-tracker",
   "bin": {
-    "coronavirus-tracker": "bin/index.js"
+    "coronavirus-tracker": "cross-env NODE_ENV=\"production\" bin/index.js"
   },
   "engines": {
     "node": ">=11"
@@ -35,11 +35,12 @@
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "jest": "^25.1.0"
   },
   "scripts": {
-    "start": "node bin/index.js",
+    "start": "cross-env NODE_ENV=\"development\" bin/index.js",
     "test": "jest"
   },
   "author": "Bagas Wahyu Hidayah",
