@@ -1,6 +1,6 @@
 {
   "name": "coronavirus-tracker",
-  "version": "1.0.21",
+  "version": "1.0.24",
   "description": "Track new Covid-19 cases and deaths on your desktop",
   "main": "bin/index.js",
   "repository": "https://github.com/bagaswh/coronavirus-tracker",
@@ -19,7 +19,6 @@
     "blessed-contrib": "^4.8.19",
     "cheerio": "^1.0.0-rc.3",
     "commander": "^5.0.0",
-    "config": "^3.3.1",
     "debug": "^4.1.1",
     "delay": "^4.3.0",
     "lodash": "^4.17.15",
